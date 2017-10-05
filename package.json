@@ -1,0 +1,23 @@
+{
+  "name": "ngsi-server",
+  "version": "1.0.0",
+  "description": "Servidor",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index.js"
+  },
+  "keywords": [
+    "ngsi",
+    "contextBroker",
+    "fiware",
+    "smartsdk"
+  ],
+  "author": "Haidée Onofre & Daniel Torres",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.1",
+    "ngsi-parser": "^1.1.1",
+    "node-fetch": "^1.7.3",
+    "ocbjslibrary": "^0.1.2"
+  }
+}
