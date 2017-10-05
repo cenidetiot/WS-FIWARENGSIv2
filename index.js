@@ -36,7 +36,7 @@ router.route('/entities')
 .get((req,res) =>{
 	cb.listEntities()
 	.then((result) => res.json(result))
-	.catch((err) => res.json({message : err}))
+	.catch((err) =>{res.status(500).send(err.toString())})
 	
 })
 
@@ -50,7 +50,7 @@ router.route('/entities/:entity_type')
 	)
 	cb.createEntity(entity)
 	.then((result) => res.json({id : id}))
-	.catch((err) => res.json({message : err}))
+	.catch((err) =>{res.status(500).send(err.toString())})
 }) 
 
 router.route('/entities/:entity_type/:entity_id')
@@ -62,21 +62,20 @@ router.route('/entities/:entity_type/:entity_id')
 		req.body
 	)
 	cb.createEntity(entity)
-	.then((result) => res.json({id : id}))
-	.catch((err) => res.json({message : err}))
+	.then((result) => res.json(result))
+	.catch((err) =>{res.status(500).send(err.toString())})
 }) 
-
 
 router.route('/entity/:entity_id')
 .delete((req, res) =>{
 	cb.deleteEntity(req.params.entity_id)
 	.then((result) => res.json(result))
-	.catch((err) => res.json({message : err}))
+	.catch((err) =>{res.status(500).send(err.toString())})
 })
 .get((req,res) =>{
 	cb.getEntity(req.params.entity_id)
 	.then((result) => res.json(result))
-	.catch((err) => res.json({message : err}))
+	.catch((err) =>{res.status(500).send(err.toString())})
 })
 
 router.route('/entity/updateJSONAttrEntity/:idEntity/:nameAttribute/:jsonAttr')

@@ -19,6 +19,6 @@
     "express": "^4.16.1",
     "ngsi-parser": "^1.1.1",
     "node-fetch": "^1.7.3",
-    "ocb-sender": "^1.0.0"
+    "ocb-sender": "^1.0.1"
   }
 }
