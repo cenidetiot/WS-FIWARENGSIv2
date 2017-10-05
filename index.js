@@ -33,9 +33,6 @@ app.get('/', (req, res) => {
 //	/api/entity/updateEntityAttributeValue/:idEntity/:nameObjectAttribute/:attrOfObject/:val 	PUT     Update a attribute that includes json object attribute of the entity.
 
 router.route('/entities')
-.post((req, res) => {
-	
-}) 
 .get((req,res) =>{
 	cb.listEntities()
 	.then((result) => res.json(result))
@@ -43,13 +40,45 @@ router.route('/entities')
 	
 })
 
+router.route('/entities/:entity_type')
+.post((req, res) => {
+	let id = Date.now().toString()
+	let entity = ngsi.parseEntity(
+		req.params.entity_type,
+		id,
+		req.body
+	)
+	cb.createEntity(entity)
+	.then((result) => res.json({id : id}))
+	.catch((err) => res.json({message : err}))
+}) 
+
+router.route('/entities/:entity_type/:entity_id')
+.post((req, res) => {
+	let id = Date.now().toString()
+	let entity = ngsi.parseEntity(
+		req.params.entity_type,
+		req.params.entity_id,
+		req.body
+	)
+	cb.createEntity(entity)
+	.then((result) => res.json({id : id}))
+	.catch((err) => res.json({message : err}))
+}) 
+
+
 router.route('/entity/:entity_id')
 .delete((req, res) =>{
-	
+	cb.deleteEntity(req.params.entity_id)
+	.then((result) => res.json(result))
+	.catch((err) => res.json({message : err}))
 })
 .get((req,res) =>{
-
+	cb.getEntity(req.params.entity_id)
+	.then((result) => res.json(result))
+	.catch((err) => res.json({message : err}))
 })
+
 router.route('/entity/updateJSONAttrEntity/:idEntity/:nameAttribute/:jsonAttr')
 .put((req,res) =>{
 
