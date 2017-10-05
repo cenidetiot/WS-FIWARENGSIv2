@@ -19,7 +19,7 @@ cb.testConnect();
 var router = express.Router();              // get an instance of the express Router
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
-app.get('/', function(req, res) {
+app.get('/', (req, res) => {
     res.json({ message: 'Welcome to our api!' });   
 });
 
@@ -33,30 +33,30 @@ app.get('/', function(req, res) {
 //	/api/entity/updateEntityAttributeValue/:idEntity/:nameObjectAttribute/:attrOfObject/:val 	PUT     Update a attribute that includes json object attribute of the entity.
 
 router.route('/entities')
-.post(function(req, res){
+.post((req, res) => {
 	
 }) 
-.get(function(req,res){
-	res.json({ message: 'entities!' }); 
+.get((req,res) =>{
+	res.json(cb.listEntities()); 
 })
 
 router.route('/entity/:entity_id')
-.delete(function(req, res){
+.delete((req, res) =>{
 	
 })
-.get(function(req,res){
+.get((req,res) =>{
 
 })
 router.route('/entity/updateJSONAttrEntity/:idEntity/:nameAttribute/:jsonAttr')
-.put(function(req,res){
+.put((req,res) =>{
 
 })
 router.route('/entity/updateEntityAttrs/:idEntity/:jsonObjectAttrs')
-.patch(function(req,res){
+.patch((req,res) =>{
 
 })
 router.route('/entity/updateEntityAttributeValue/:idEntity/:nameObjectAttribute/:attrOfObject/:val')
-.put(function(req,res){
+.put((req,res) =>{
 
 })
 
