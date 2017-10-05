@@ -1,13 +1,13 @@
 var ngsi = require('ngsi-parser');
 var cb = require('ocbjslibrary');
-var express = require('express'),
-var app = express(),
+var express = require('express');
+var app = express();
 var port = process.env.PORT || 8000;
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+//app.use(bodyParser.urlencoded({ extended: true }));
+//app.use(bodyParser.json());
 
 cb.config('http://207.249.127.149',1026,'v2'); 
 cb.testConnect();
@@ -35,7 +35,7 @@ router.route('/entities')
 
 	}) 
 	.get(function(req,res){
-
+		res.send(cb.listEntities());
 	})
 router.route('/entity/:entity_id')
 	.delete(function(req, res){
