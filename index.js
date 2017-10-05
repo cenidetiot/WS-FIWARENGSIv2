@@ -14,8 +14,6 @@ var _JSONAttrEntity = require('./routes/updateJSONAttrEntity');
 var _AttributeValue = require('./routes/updateEntityAttributeValue');
 var _EntityAttrs = require('./routes/updateEntityAttrs');
 
-
-
 app.use('/index', _index);
 app.use('/create', _create);
 app.use('/delete', _delete);
@@ -23,7 +21,6 @@ app.use('/list', _list);
 app.use('/updateJSONAttrEntity', _JSONAttrEntity);
 app.use('/updateEntityAttributeValue', _AttributeValue);
 app.use('/updateEntityAttrs', _EntityAttrs);
-
 
 app.listen(3000, () => console.log('listening on *:3000'));
 
