@@ -1,9 +1,31 @@
+var express = require('express');
 var ngsi = require('ngsi-parser');
 var cb = require('ocbjslibrary');
 
-
 cb.config('http://207.249.127.149',1026,'v2'); 
 cb.testConnect();
+var app = express();
+
+var _index = require('./routes/index');
+var _delete = require('./routes/delete');
+var _create = require('./routes/create');
+var _list = require('./routes/list');
+var _JSONAttrEntity = require('./routes/updateJSONAttrEntity');
+var _AttributeValue = require('./routes/updateEntityAttributeValue');
+var _EntityAttrs = require('./routes/updateEntityAttrs');
+
+
+
+app.use('/index', _index);
+app.use('/create', _create);
+app.use('/delete', _delete);
+app.use('/list', _list);
+app.use('/updateJSONAttrEntity', _JSONAttrEntity);
+app.use('/updateEntityAttributeValue', _AttributeValue);
+app.use('/updateEntityAttrs', _EntityAttrs);
+
+
+app.listen(3000, () => console.log('listening on *:3000'));
 
 /*
 var entidad = ngsi.parseEntity('Room', 'RoomPrueba',{
