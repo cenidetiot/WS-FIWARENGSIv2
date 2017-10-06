@@ -22,27 +22,25 @@ var router = express.Router();              // get an instance of the express Ro
 // all of our routes will be prefixed with /api
 app.use('/api', router);
 /*==================ROUTES=================
-/api/entities																				GET		Get all the entities.
-/api/entities																				POST	Create a entity.
-/api/entity/:entity_id																		GET		Get a single entity.
-/api/entity/:entity_id																		DELETE	Delete a entity.
-/api/entity/updateJSONAttrEntity/:idEntity/:nameAttribute/:jsonAttr							PUT		Update a json object of a entity attribute.
-/api/entity/updateEntityAttrs/:idEntity/:jsonObjectAttrs									PATCH	Update a json objects attributes of a entity.
-/api/entity/updateEntityAttributeValue/:idEntity/:nameObjectAttribute/:attrOfObject/:val 	PUT     Update a attribute that includes json object attribute of the entity.
+/api/entities				GET		Get all the entities.
+/api/entities/:entity_type	POST	Create a entity with a ramdom ID.
+/api/entities/:entity_type/:entity_id	POST Create a entity with a specific ID.
+/api/entity/:entity_id	GET		Get a single entity.
+/api/entity/:entity_id	DELETE	Delete a entity.
+/api/entity/updateJSONAttrEntity/:idEntity/:nameAttribute	PUT	Update a json object of a entity attribute.
+/api/entity/updateEntityAttrs/:idEntity	PATCH	Update a json objects attributes of a entity.
 
-test route to make sure everything is working (accessed at GET http://localhost:8080/api)*/
-
+*/
 router.route('/')
 .get((req, res) => {
 	res.json({ message: 'Welcome to our api!' });   
 });
 
-
 router.route('/entities')
 .get((req,res) =>{
 	cb.listEntities()
 	.then((result) => res.json(result))
-	.catch((err) =>{res.status(500).send(err.toString())})
+	.catch((err) =>{res.status(404).send(err.toString())})
 	
 })
 
@@ -61,7 +59,7 @@ router.route('/entities/:entity_type')
 
 router.route('/entities/:entity_type/:entity_id')
 .post((req, res) => {
-	let id = Date.now().toString()
+	//let id = Date.now().toString()
 	let entity = ngsi.parseEntity(
 		req.params.entity_type,
 		req.params.entity_id,
@@ -73,35 +71,39 @@ router.route('/entities/:entity_type/:entity_id')
 }) 
 
 router.route('/entity/:entity_id')
-.delete((req, res) =>{
+.delete((req, res) => {
 	cb.deleteEntity(req.params.entity_id)
 	.then((result) => res.json(result))
-	.catch((err) =>{res.status(500).send(err.toString())})
+	.catch((err) => res.status(500).send(err.toString()))
 })
-.get((req,res) =>{
+.get((req,res) => {
 	cb.getEntity(req.params.entity_id)
 	.then((result) => res.json(result))
-<<<<<<< HEAD
-	.catch((err) => res.json({message : err.toString()}))
-=======
-	.catch((err) =>{res.status(500).send(err.toString())})
->>>>>>> 0acde4a96c64185888ff594e87daf7b50242e8e4
+	.catch((err) => res.status(404).send(err.toString()))
 })
 
-router.route('/entity/updateJSONAttrEntity/:idEntity/:nameAttribute/:jsonAttr')
+router.route('/entity/updateJSONAttrEntity/:idEntity/:nameAttribute')
 .put((req,res) =>{
-
-})
-router.route('/entity/updateEntityAttrs/:idEntity/:jsonObjectAttrs')
-.patch((req,res) =>{
-
-})
-router.route('/entity/updateEntityAttributeValue/:idEntity/:nameObjectAttribute/:attrOfObject/:val')
-.put((req,res) =>{
-
+	let jsonAttr = ngsi.parseValue(req.body)
+	cb.updateJSONAttrEntity(req.params.idEntity,req.params.nameAttribute, jsonAttr)
+	.then((result)=> res.json(result))
+	.catch((err) => res.status(500).send(err.toString()))
 })
 
+router.route('/entity/updateEntityAttrs/:idEntity')
+.patch((req,res) => {
+	let jsonObjectAttrs = ngsi.parseAttrs(req.body)
+	cb.updateEntityAttrs(req.params.idEntity, jsonObjectAttrs)
+	.then((result)=> res.json(result))
+	.catch((err) => res.status(500).send(err.toString()))
+})
 
+
+// Middleware for Handle 404 - Keep this as a last route
+app.use(function(req, res, next) {
+    res.status(400);
+    res.send('404 : Request Not Found, check the URL or the parameters sended');
+});
 
 // START THE SERVER
 // =============================================================================
