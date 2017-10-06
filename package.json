@@ -17,8 +17,9 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.1",
-    "ngsi-parser": "^1.1.2",
+    "ngsi-parser": "^1.1.3",
     "node-fetch": "^1.7.3",
-    "ocb-sender": "^1.0.2"
+    "nodemon": "^1.12.1",
+    "ocb-sender": "^1.1.0"
   }
 }

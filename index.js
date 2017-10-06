@@ -21,16 +21,18 @@ var router = express.Router();              // get an instance of the express Ro
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
 app.use('/api', router);
+
 /*==================ROUTES=================
 /api/entities				GET		Get all the entities.
 /api/entities/:entity_type	POST	Create a entity with a ramdom ID.
 /api/entities/:entity_type/:entity_id	POST Create a entity with a specific ID.
 /api/entity/:entity_id	GET		Get a single entity.
 /api/entity/:entity_id	DELETE	Delete a entity.
+/api/entity/addAttribute/:entity_id    POST Add atribute to entity
 /api/entity/updateJSONAttrEntity/:idEntity/:nameAttribute	PUT	Update a json object of a entity attribute.
 /api/entity/updateEntityAttrs/:idEntity	PATCH	Update a json objects attributes of a entity.
+/api/entity/updateEntityAttributeValue/:idEntity/:nameObjectAttribute/:val PUT update value attribute of the object to the entity*/
 
-*/
 router.route('/')
 .get((req, res) => {
 	res.json({ message: 'Welcome to our api!' });   
@@ -82,6 +84,14 @@ router.route('/entity/:entity_id')
 	.catch((err) => res.status(404).send(err.toString()))
 })
 
+router.route('/entity/addAttribute/:entity_id')
+.post((req, res) => {
+	let JSONAttribute = ngsi.parseAttrs(req.body)
+	cb.addJSONAttributeToEntity(req.params.entity_id,JSONAttribute)
+	.then((result) => res.json(result))
+	.catch((err) =>{res.status(404).send(err.toString())})
+}) 
+
 router.route('/entity/updateJSONAttrEntity/:idEntity/:nameAttribute')
 .put((req,res) =>{
 	let jsonAttr = ngsi.parseValue(req.body)
@@ -98,6 +108,13 @@ router.route('/entity/updateEntityAttrs/:idEntity')
 	.catch((err) => res.status(500).send(err.toString()))
 })
 
+router.route('/entity/updateEntityAttributeValue/:idEntity/:nameObjectAttribute/:val')
+.put((req,res) => {
+	//let value = ngsi.parseValue(req.body);
+	cb.updateEntityAttributeValue(req.params.idEntity,req.params.nameObjectAttribute,req.params.val)
+	.then((result)=> res.json(result))
+	.catch((err) => res.status(500).send(err.toString()))
+})
 
 // Middleware for Handle 404 - Keep this as a last route
 app.use(function(req, res, next) {
