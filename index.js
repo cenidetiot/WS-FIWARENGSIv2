@@ -48,10 +48,11 @@ router.route('/entities')
 router.route('/config')
 .post((req, res) => {
 	let ip = req.body.ip
-	let port = req.body.port
-	cb.config(`http://${ip}`,port,'v2'); 
-	cb.testConnect();
-	res.status(200).send("Ok")
+	let p = req.body.port
+	cb.config(`http://${ip}`,p,'v2')
+	.then((result) => res.status(200).json(result) )
+	.catch((err) => res.status(500).json(result))
+	
 })
 
 router.route('/entities/:entity_type')
