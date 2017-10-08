@@ -1,4 +1,4 @@
-Welcome to FIWARE WS-FIWARENGSIv2!
+Welcome to WS-FIWARENGSIv2!
 ===================
 
 
