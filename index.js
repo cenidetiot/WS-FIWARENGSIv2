@@ -11,8 +11,7 @@ var port = process.env.PORT || 8000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-cb.config('http://207.249.127.149',1026,'v2'); 
-cb.testConnect();
+
 
 // ROUTES FOR OUR API
 // =============================================================================
@@ -44,6 +43,15 @@ router.route('/entities')
 	.then((result) => res.json(result))
 	.catch((err) =>{res.status(404).send(err.toString())})
 	
+})
+
+router.route('/config')
+.post((req, res) => {
+	let ip = req.body.ip
+	let port = req.body.port
+	cb.config(`http://${ip}`,port,'v2'); 
+	cb.testConnect();
+	res.status(200).send("Ok")
 })
 
 router.route('/entities/:entity_type')
