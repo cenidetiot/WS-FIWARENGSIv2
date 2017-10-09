@@ -9,7 +9,7 @@ WS-FIWARENGSIv2 is a web service RESTful that allows the manage of the npm modul
 
 * [How to Install](#how-to-install)
 * [Usage](#usage)
-	* [Confguration](#import)
+	* [Configuration](#import)
 	* [Basic Functions](#basic-functions)
 		* [List all Entities of the Context Broker ]()
 		* [Create an Entity in ContextBroker]()
@@ -20,7 +20,7 @@ WS-FIWARENGSIv2 is a web service RESTful that allows the manage of the npm modul
 		* [Update Entity]()
 			* [Add an Attribute to an entity]()
 			* [Update all the object attributes of an entity.]()
-			* [Update the JSON Object of an atttribute of the entity.]()
+			* [Update the JSON Object of an attribute of the entity.]()
 			* [Update the value attribute of a JSON Object.]()
 * [License](#license)
 
